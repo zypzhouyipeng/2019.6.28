@@ -97,3 +97,20 @@ PS:
         ...mapActions(['action 的名字'])
       }
       ```
+
+## 如果一个数据 是 仓库 中的数据，并且在组件中使用 v-model 的方式去使用，需要注意。
+```js
+inputVal: {
+  get () {
+    return this.$store.state.inputVal
+  },
+
+  set (value) {
+    // this.$store.commit('CHG_INPUG_VAL', value);
+    this.$store.commit({
+      type: 'CHG_INPUT_VAL',
+      value
+    })
+  }
+}
+```

@@ -4,12 +4,7 @@
 
     <div class="todoList">
       <div class="todoList__top">
-        <el-input
-          ref="todoInput"
-          v-model="inputVal"
-          placeholder="请输入..."
-          >
-        </el-input>
+        <el-input ref="todoInput" v-model="inputVal" placeholder="请输入..."></el-input>
         <el-button type="primary" :disabled="!inputVal" @click="addTodo">ADD</el-button>
       </div>
 
@@ -36,34 +31,20 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
-import { CHG_INPUT_VAL } from '../store/types'
+import { mapState, mapMutations, mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'home',
 
   data () {
     return {
-      // inputVal: '',
+      inputVal: '',
     }
   },
 
   computed: {
     ...mapState(['todoList', 'name']),
-    ...mapGetters(['todoListNum']),
-
-    inputVal: {
-      get () {
-        return this.$store.state.inputVal
-      },
-
-      set (value) {
-        this.$store.commit({
-          type: CHG_INPUT_VAL,
-          value
-        })
-      }
-    }
+    ...mapGetters(['todoListNum'])
   },
 
   methods: {
@@ -77,7 +58,7 @@ export default {
 
     // ...mapActions(['ADD_TODO_ACT']),
     ADD_TODO_ACT (payload) {
-      this.$store.dispatch('ADD_TODO_ACT', payload)
+      this.$store.dispatch('ADD_TODO_ACT', payload);
       // this.$store.dispatch({
       //   type: 'ADD_TODO_ACT',
       //   ...payload
@@ -87,8 +68,8 @@ export default {
      * 添加todo
      */
     addTodo () {
-      let lastTodo = this.todoList[this.todoList.length - 1]
-      let id = lastTodo ? lastTodo.id + 1 : 1
+      let lastTodo = this.todoList[this.todoList.length - 1];
+      let id = lastTodo ? lastTodo.id + 1 : 1;
 
       // this.$store.dispatch('ADD_TODO_ACT', {
       //   id,
@@ -99,8 +80,8 @@ export default {
         name: this.inputVal
       })
 
-      this.inputVal = ''
-      this.$refs.todoInput.focus()
+      this.inputVal = '';
+      this.$refs.todoInput.focus();
 
       // this.todoList.push({
       //   id,
@@ -133,13 +114,9 @@ export default {
     // }
   },
 
-  mounted () {
-    // console.log(this.$store);
-    // let a = 10;
-    // if ( a === -0) {
-    //   console.log(123)
-    // }
-  }
+  // mounted () {
+  //   console.log(this.$store);
+  // }
 }
 </script>
 

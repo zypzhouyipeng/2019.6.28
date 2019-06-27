@@ -1,13 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { CHG_INPUT_VAL } from './types'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    inputVal: '',
-
     todoList: [
       {id: 1, name: '吃饭'},
       {id: 2, name: '睡觉'}
@@ -23,18 +20,11 @@ export default new Vuex.Store({
      * @param {*} getters store.getters
      */
     todoListNum (state) {
-      return state.todoList.length
+      return state.todoList.length;
     }
   },
 
   mutations: {
-    /**
-     * 修改 inputVal
-     * @param {Object} payload 需要修改成的内容
-     */
-    [CHG_INPUT_VAL] (state, payload) {
-      state.inputVal = payload.value
-    },
     /**
      * 修改 name 这个 状态（数据）
      * @param {Object} state store.state
@@ -55,7 +45,7 @@ export default new Vuex.Store({
      * 删除 payload.index 下标的 todo
      */
     DEL_TODO (state, payload) {
-      state.todoList.splice(payload.index, 1)
+      state.todoList.splice(payload.index, 1);
     }
   },
 
@@ -77,7 +67,7 @@ export default new Vuex.Store({
           type: 'ADD_TODO',
           ...payload
         })
-      }, 2000)
+      }, 2000);
     }
   }
 })
