@@ -1,29 +1,7 @@
-# vue-vuex
+# vuex
 
-## Project setup
-```
-yarn install
-```
+## 使用
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
-
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+1. npm install --save vuex
+2. 创建一个 store.js 用来实例化 vuex 的仓库  new Vuex.Store()
+3. 在 new Vue 配置 store 选项
