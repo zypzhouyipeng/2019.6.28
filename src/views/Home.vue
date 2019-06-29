@@ -32,6 +32,40 @@
         </el-table-column>
       </el-table>
     </div>
+    
+    <hr>
+
+    <div class="carList">
+      <div class="left">
+        <ul>
+          <li
+            v-for="item in productList"
+            :key="item.id"
+          >
+            <p>商品名称：{{ item.name }}</p>
+            <p>商品单价：{{ item.price }}</p>
+            <button @click="CHG_CARLIST({ name: 'reduce', product: item })">-</button>
+            <button @click="CHG_CARLIST({ name: 'add', product: item })">+</button>
+          </li>
+        </ul>
+      </div>
+      <div class="right">
+        <p
+          v-if="carTotal"
+        >最终总价：{{ carTotal }}</p>
+        <ul>
+          <li
+            v-for="item in carList"
+            :key="item.id"
+          >
+            <p>商品名称：{{ item.name }}</p>
+            <p>商品单价：{{ item.price }}</p>
+            <p>购买数量：{{ item.num }}</p>
+            <p>商品总价：{{ item.total }}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -49,8 +83,13 @@ export default {
   },
 
   computed: {
-    ...mapState(['todoList', 'name']),
-    ...mapGetters(['todoListNum']),
+    // ...mapState(['todoList', 'name', 'productList', 'carList']),
+    // ...mapGetters(['todoListNum', 'carTotal']),
+    ...mapState(['name']),
+    ...mapState('todo', ['todoList']),
+    ...mapState('car', ['productList', 'carList']),
+    ...mapGetters('todo', ['todoListNum']),
+    ...mapGetters('car', ['carTotal']),
 
     inputVal: {
       get () {
@@ -59,7 +98,7 @@ export default {
 
       set (value) {
         this.$store.commit({
-          type: CHG_INPUT_VAL,
+          type: "todo/" + CHG_INPUT_VAL,
           value
         })
       }
@@ -70,14 +109,14 @@ export default {
     // ...mapMutations(['DEL_TODO']),
     DEL_TODO (payload) {
       this.$store.commit({
-        type: 'DEL_TODO',
+        type: "todo/" + 'DEL_TODO',
         ...payload
       })
     },
 
     // ...mapActions(['ADD_TODO_ACT']),
     ADD_TODO_ACT (payload) {
-      this.$store.dispatch('ADD_TODO_ACT', payload)
+      this.$store.dispatch('todo/ADD_TODO_ACT', payload)
       // this.$store.dispatch({
       //   type: 'ADD_TODO_ACT',
       //   ...payload
@@ -101,44 +140,18 @@ export default {
 
       this.inputVal = ''
       this.$refs.todoInput.focus()
-
-      // this.todoList.push({
-      //   id,
-      //   name: this.inputVal
-      // })
-      // setTimeout(() => {
-      //   this.$store.commit({
-      //     type: 'ADD_TODO',
-      //     id,
-      //     name: this.inputVal
-      //   });
-
-      //   this.inputVal = '';
-      //   // console.log(this.$refs.todoInput);
-      //   this.$refs.todoInput.focus();
-      // }, 2000)
     },
 
-    /**
-     * 删除todo
-     * @param {Number} index 下标
-     */
-    // delTodo (index) {
-    //   // this.todoList.splice(index, 1);
-    //   this.$store.commit({
-    //     type: 'DEL_TODO',
-    //     index
-    //   })
-    //   // 发现这个 delTodo 方法，里面的代码就只有提交 mutation, 那么就推荐使用 辅助函数的方法
-    // }
+    CHG_CARLIST (payload) {
+      this.$store.commit({
+        type: "car/" + 'CHG_CARLIST',
+        ...payload
+      })
+    }
   },
 
   mounted () {
-    // console.log(this.$store);
-    // let a = 10;
-    // if ( a === -0) {
-    //   console.log(123)
-    // }
+
   }
 }
 </script>
@@ -157,4 +170,19 @@ export default {
     }
   }
 }
+
+.carList {
+  display: flex;
+  width: 700px;
+  margin: auto;
+
+  > div {
+    flex: 1;
+  }
+
+  .left {
+    border-right: 1px solid #000;
+  }
+}
+
 </style>
