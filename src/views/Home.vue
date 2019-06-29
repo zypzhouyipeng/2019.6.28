@@ -68,7 +68,7 @@
     </div>
   </div>
 </template>
-
+ggf
 <script>
 import { mapState, mapGetters } from 'vuex'
 import { CHG_INPUT_VAL } from '../store/types'
